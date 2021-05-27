@@ -103,7 +103,7 @@ def job2():
     merged = pd.merge(energy_df, power_df)
     print(energy_df, power_df)
 
-    merged.to_csv("C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/energy_power_production.csv'", index=False)
+    merged.to_csv("C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/energy_power_production.csv", index=False)
 
     with open('C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/energy_power_production.csv') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
