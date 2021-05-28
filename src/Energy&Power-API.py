@@ -70,7 +70,6 @@ def job1():
 def job2():
 
     api_data = solaredge.Solaredge("I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V")
-    conn = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="5gtnoulu", db="smartmetering")
 
     # Edit this date range as you see fit
     # If querying at the maximum resolution of 15 minute intervals, the API is limited to queries of a month at a time
@@ -110,7 +109,8 @@ def job2():
 
 
         for row in reader:
-
+            
+            conn = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="5gtnoulu", db="smartmetering")
             sql_statement = "INSERT INTO energy_power_production(date ,energy ,power)  VALUES (%s,%s,%s)"
             cur = conn.cursor()
             cur.executemany(sql_statement, [(row['date'], row['energy'], row['power'])])
