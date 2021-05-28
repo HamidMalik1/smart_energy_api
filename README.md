@@ -9,3 +9,9 @@ So the fractiles in the PV forecast, and how narrowly or widely they are distrib
 # SolarEgde Monitoring Server API 
 Provides all the API's for Solaredge monitoring service
 Including Energy, Power and other useful data for solar production at Uni of Oulu
+
+
+
+# Data visualization
+The graphic representation of data is shown using Grafana 
+Energy_Weather.json and local snapshot : http://localhost:3000/dashboard/snapshot/mtubveNFfyPH9WFgu8G1d5KeF6UndWxk  
