@@ -70,7 +70,6 @@ def job1():
 def job2():
 
     api_data = solaredge.Solaredge("I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V")
-    conn = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="5gtnoulu", db="smartmetering")
 
     # Edit this date range as you see fit
     # If querying at the maximum resolution of 15 minute intervals, the API is limited to queries of a month at a time
@@ -103,21 +102,25 @@ def job2():
     merged = pd.merge(energy_df, power_df)
     print(energy_df, power_df)
 
-    merged.to_csv("C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/energy_power_production.csv'", index=False)
+    merged.to_csv("C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/energy_power_production.csv", index=False)
 
     with open('C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/energy_power_production.csv') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
 
 
         for row in reader:
-
+            
+            conn = MySQLdb.connect(host="localhost", port=3306, user="root", passwd="5gtnoulu", db="smartmetering")
             sql_statement = "INSERT INTO energy_power_production(date ,energy ,power)  VALUES (%s,%s,%s)"
             cur = conn.cursor()
             cur.executemany(sql_statement, [(row['date'], row['energy'], row['power'])])
 
             conn.escape_string(sql_statement)
             conn.commit()
-
+        
+        
+        # Add auto_increment in energy_production table to avoid repeating values. 
+        
         sql_Delete_query = """DELETE n1 FROM energy_power_production n1, energy_power_production n2 WHERE n1.ID < n2.ID AND n1.date = n2.date """
         cur.execute(sql_Delete_query)
         conn.commit()
