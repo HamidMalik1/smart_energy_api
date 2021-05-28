@@ -117,7 +117,10 @@ def job2():
 
             conn.escape_string(sql_statement)
             conn.commit()
-
+        
+        
+        # Add auto_increment in energy_production table to avoid repeating values. 
+        
         sql_Delete_query = """DELETE n1 FROM energy_power_production n1, energy_power_production n2 WHERE n1.ID < n2.ID AND n1.date = n2.date """
         cur.execute(sql_Delete_query)
         conn.commit()
