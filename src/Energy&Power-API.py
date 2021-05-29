@@ -16,15 +16,6 @@ import time
 
 
 
-
-today = datetime.today().strftime('%Y-%m-%d')
-print(today)
-yesterday = datetime.now() - timedelta(1)
-yesterday = datetime.strftime(yesterday, '%Y-%m-%d')
-print(yesterday)
-
-
-
 api_key = 'I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V'
 site_id = '1703225'
 
@@ -70,7 +61,12 @@ def job1():
 def job2():
 
     api_data = solaredge.Solaredge("I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V")
-
+    
+    today = datetime.today().strftime('%Y-%m-%d')
+    
+    yesterday = datetime.now() - timedelta(1)
+    yesterday = datetime.strftime(yesterday, '%Y-%m-%d')
+    
     # Edit this date range as you see fit
     # If querying at the maximum resolution of 15 minute intervals, the API is limited to queries of a month at a time
     # This script queries one day at a time, with a one-second pause per day that is polite but probably not necessary
