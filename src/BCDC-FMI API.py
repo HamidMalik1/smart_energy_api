@@ -86,7 +86,7 @@ def job():
     return
 
 
-schedule.every(60).minutes.do(job)
+schedule.every(180).minutes.do(job)
 
 while True:
     schedule.run_pending()
