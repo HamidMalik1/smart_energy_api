@@ -38,7 +38,7 @@ pip install --user pipenv
 pipenv install
 ```
 
-For this to succeed you'll need to be able to run the build for a oython module known as 'mysqlclient'. Read more: <https://github.com/PyMySQL/mysqlclient/>
+For this to succeed you'll need to be able to run the build for a python module known as 'mysqlclient'. Read more: <https://github.com/PyMySQL/mysqlclient/>
 
 3. Create a local configuration file based on the example
 
