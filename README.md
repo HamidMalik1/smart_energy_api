@@ -38,21 +38,19 @@ pip install --user pipenv
 pipenv install
 ```
 
-3. Copy example config
+3. Create a local configuration file based on the example
 
-```
+```sh
 cp config.toml.example config.toml
 ```
 
-4. Run:
+4. Source the virtual environment:
 
 ```sh
 pipenv shell
 ```
 
-```sh
-python src/main.py
-```
+
 
 # Linting with pylint
 
