@@ -38,6 +38,8 @@ pip install --user pipenv
 pipenv install
 ```
 
+For this to succeed you'll need to be able to run the build for a oython module known as 'mysqlclient'. Read more: <https://github.com/PyMySQL/mysqlclient/>
+
 3. Create a local configuration file based on the example
 
 ```sh
@@ -48,6 +50,12 @@ cp config.toml.example config.toml
 
 ```sh
 pipenv shell
+```
+
+You'll also need a MySQL-server, in a development setting you can spin up one with:
+
+```sh
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest
 ```
 
 

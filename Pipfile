@@ -6,10 +6,10 @@ name = "pypi"
 [packages]
 requests = "*"
 schedule = "*"
-pymysql = "*"
 solaredge = "*"
 toml = "*"
 pylint = "*"
+mysqlclient = "*"
 
 [dev-packages]
 
