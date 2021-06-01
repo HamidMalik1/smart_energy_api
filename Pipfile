@@ -10,6 +10,7 @@ solaredge = "*"
 toml = "*"
 pylint = "*"
 mysqlclient = "*"
+pandas = "*"
 
 [dev-packages]
 
