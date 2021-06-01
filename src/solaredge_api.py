@@ -157,8 +157,8 @@ print(result7['storage_api'])
 
 
 class siteenvbenefits():
-     @staticmethod
-     def envdata():
+    @staticmethod
+    def envdata():
         envbenefits_api = site_env_benefits_json_data['envBenefits']
 
         return {'envbenefits_api': envbenefits_api}
