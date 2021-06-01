@@ -12,7 +12,7 @@ from config import CONFIG
 
 
 
-ILMANET_OUTPUT = CONFIG["csv"]["ilmanet"]
+ILMANET_OUTPUT = CONFIG['csv']['ilmanet']
 
 
 

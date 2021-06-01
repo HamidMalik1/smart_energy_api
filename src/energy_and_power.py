@@ -15,12 +15,12 @@ import schedule
 from config import CONFIG
 
 
-POWER_OUTPUT = CONFIG["csv"]["solar_edge_power"]
+POWER_OUTPUT = CONFIG['csv']['solar_edge_power']
 
-SOLAR_EDGE_CONFIG = CONFIG["solar_edge"]
+SOLAR_EDGE_CONFIG = CONFIG['solar_edge']
 
-api_key = SOLAR_EDGE_CONFIG["api_key"]
-site_id = SOLAR_EDGE_CONFIG["site_id"]
+api_key = SOLAR_EDGE_CONFIG['api_key']
+site_id = SOLAR_EDGE_CONFIG['site_id']
 
 
 def job1():

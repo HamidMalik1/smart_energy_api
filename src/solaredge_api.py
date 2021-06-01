@@ -6,12 +6,12 @@ import requests
 
 from config import CONFIG
 
-SOLAR_EDGE_CONFIG = CONFIG["solar_edge"]
+SOLAR_EDGE_CONFIG = CONFIG['solar_edge']
 
 
 
-api_key = SOLAR_EDGE_CONFIG["api_key"]
-site_id = SOLAR_EDGE_CONFIG["site_id"]
+api_key = SOLAR_EDGE_CONFIG['api_key']
+site_id = SOLAR_EDGE_CONFIG['site_id']
 
 
 api_url_meters = 'https://monitoringapi.solaredge.com/site/' + site_id + '/meters?&startTime=2021-05-24%2000:00:00&endTime=2021-05-24%2023:00:00&api_key=' + api_key
