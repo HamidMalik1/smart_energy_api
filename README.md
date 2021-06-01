@@ -14,4 +14,4 @@ Including Energy, Power and other useful data for solar production at Uni of Oul
 
 # Data visualization
 The graphic representation of data is shown using Grafana 
-Energy_Weather.json and local snapshot : http://localhost:3000/dashboard/snapshot/mtubveNFfyPH9WFgu8G1d5KeF6UndWxk  
+Energy_Weather.json and local snapshot : http://localhost:3000/dashboard/snapshot/c1gHvcH1f6tp1SPP4sZGc2rxARGe5MC5 
