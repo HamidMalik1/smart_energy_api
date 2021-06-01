@@ -9,3 +9,10 @@ def load():
     return toml.load(DEFAULT_FILENAME)
 
 CONFIG = load()
+
+MYSQL_CONNECTION = {
+	'host': CONFIG['db']['host'],
+	'port': CONFIG['db']['port'],
+	'user': CONFIG['db']['user'],
+	'passwd': CONFIG['db']['passwd']
+}

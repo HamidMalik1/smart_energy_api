@@ -12,7 +12,7 @@ import requests
 import solaredge
 import schedule
 
-from config import CONFIG
+from config import CONFIG, MYSQL_CONNECTION
 
 
 
@@ -49,11 +49,7 @@ def job1():
     result4 = overview.site_overview()
 
 
-    conn = MySQLdb.connect(host="localhost",
-        port=3306,
-        user="root",
-        passwd="5gtnoulu",
-        db="smartmetering")
+    conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
     sql_statement = "INSERT INTO solaredge_overview_api(lastupdatetime, lifetimedata, " \
         "lastyearenergy, lastmonthenergy,lastdayenergy, currentpower )  VALUES (%s,%s,%s,%s,%s,%s)"
     cur = conn.cursor()
@@ -119,11 +115,8 @@ def job2():
 
         for row in reader:
 
-            conn = MySQLdb.connect(host="localhost",
-                port=3306,
-                user="root",
-                passwd="5gtnoulu",
-                db="smartmetering")
+            conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
+
             sql_statement = "INSERT INTO energy_power_production(date ,energy ,power) " \
                 "VALUES (%s,%s,%s)"
             cur = conn.cursor()

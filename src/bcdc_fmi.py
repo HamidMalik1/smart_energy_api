@@ -9,7 +9,7 @@ import MySQLdb
 import pandas as pd
 import schedule
 
-from config import CONFIG
+from config import CONFIG, MYSQL_CONNECTION
 
 
 
@@ -21,10 +21,7 @@ def job():
 
 
     #Database connection settings
-    conn = MySQLdb.connect(host="localhost",
-        port=3306, user="root",
-        passwd="5gtnoulu",
-        db="smartmetering")
+    conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
 
 
     api_url_fmi = 'http://ilmanet.fi/download.php?orderId=93173&id=127&type=solar&limit=1'
