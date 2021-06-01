@@ -19,8 +19,7 @@ ILMANET_OUTPUT = CONFIG['csv']['ilmanet']
 
 def job():
 
-
-    #Database connection settings
+    # Database connection settings
     conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
 
 
@@ -35,9 +34,7 @@ def job():
                 f.write(str(x) + ',')
             f.write('\n')
 
-
-
-#This is for splitting date_time and eliminating timezone +03
+    # This is for splitting date_time and eliminating timezone +03
 
     file_name = ILMANET_OUTPUT
     df = pd.read_csv(file_name, index_col='forecast_time', parse_dates=['forecast_time'],
@@ -79,9 +76,7 @@ def job():
             conn.escape_string(sql_statement)
     conn.commit()
 
-
-
-#The Energy Weather data api send repeating forecast data entries, delete sql statement required.
+    #The Energy Weather data api send repeating forecast data entries, delete sql statement required.
 
     sql_delete_repeating_entries_query = "DELETE n1 FROM fmi_data n1, " \
         "fmi_data n2 WHERE n1.request_id < n2.request_id AND n1.forecast_time = n2.forecast_time "
