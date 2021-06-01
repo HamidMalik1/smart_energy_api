@@ -8,6 +8,12 @@ import pandas as pd
 import schedule
 import urllib.request
 
+from config import CONFIG
+
+
+
+ILMANET_OUTPUT = CONFIG["csv"]["ilmanet"]
+
 
 
 def job():
@@ -22,7 +28,7 @@ def job():
     lines = [l.decode('utf-8') for l in fmi_csv_data.readlines()]
     fmi_csv = csv.reader(lines)
 
-    with open('C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/fmi_api_data.csv', 'w') as f:
+    with open(ILMANET_OUTPUT, 'w') as f:
         for row in fmi_csv:
             for x in row:
                 f.write(str(x) + ',')
@@ -35,14 +41,14 @@ def job():
 
 #This is for splitting date_time and eliminating timezone +03
 
-    file_name = 'C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/fmi_api_data.csv'
+    file_name = ILMANET_OUTPUT
     df = pd.read_csv(file_name, index_col='forecast_time', parse_dates=['forecast_time'],
                     date_parser=lambda x: pd.to_datetime(x.rsplit('+', 1)[0]))
 
     df.to_csv(file_name, sep=',')
 
 
-    with open ('C:/Users/hamalik/Desktop/pythonProject/Solaredge-FMI/fmi_api_data.csv') as fmi_csv_file:
+    with open (ILMANET_OUTPUT) as fmi_csv_file:
         reader = csv.DictReader(fmi_csv_file, delimiter=',')
         for row in reader:
             sql_statement = "INSERT INTO fmi_data(forecast_time ,request_id ,power_output_w, " \

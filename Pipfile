@@ -8,6 +8,7 @@ requests = "*"
 schedule = "*"
 pymysql = "*"
 solaredge = "*"
+toml = "*"
 
 [dev-packages]
 

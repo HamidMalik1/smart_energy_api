@@ -4,10 +4,14 @@ Provides the SolarEdge API data of Uni of Oulu
 '''
 import requests
 
-#api_data = solaredge.Solaredge("I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V")
+from config import CONFIG
 
-api_key = 'I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V'
-site_id = '1703225'
+SOLAR_EDGE_CONFIG = CONFIG["solar_edge"]
+
+
+
+api_key = SOLAR_EDGE_CONFIG["api_key"]
+site_id = SOLAR_EDGE_CONFIG["site_id"]
 
 
 api_url_meters = 'https://monitoringapi.solaredge.com/site/' + site_id + '/meters?&startTime=2021-05-24%2000:00:00&endTime=2021-05-24%2023:00:00&api_key=' + api_key

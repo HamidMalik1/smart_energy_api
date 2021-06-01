@@ -12,10 +12,15 @@ import requests
 import solaredge
 import schedule
 
+from config import CONFIG
 
 
-api_key = 'I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V'
-site_id = '1703225'
+POWER_OUTPUT = CONFIG["csv"]["solar_edge_power"]
+
+SOLAR_EDGE_CONFIG = CONFIG["solar_edge"]
+
+api_key = SOLAR_EDGE_CONFIG["api_key"]
+site_id = SOLAR_EDGE_CONFIG["site_id"]
 
 
 def job1():
@@ -58,7 +63,7 @@ def job1():
 
 def job2():
 
-    api_data = solaredge.Solaredge("I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V")
+    api_data = solaredge.Solaredge(api_key)
     
     today = datetime.today().strftime('%Y-%m-%d')
     
