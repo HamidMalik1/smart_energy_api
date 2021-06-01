@@ -54,3 +54,11 @@ pipenv shell
 ```sh
 python src/main.py
 ```
+
+# Linting with pylint
+
+After preparing the pipenv environment please run:
+
+```sh
+pylint src/
+```

@@ -9,6 +9,7 @@ schedule = "*"
 pymysql = "*"
 solaredge = "*"
 toml = "*"
+pylint = "*"
 
 [dev-packages]
 
