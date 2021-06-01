@@ -4,44 +4,62 @@ Provides the SolarEdge API data of Uni of Oulu
 '''
 import requests
 
-#api_data = solaredge.Solaredge("I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V")
+from config import CONFIG
 
-api_key = 'I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V'
-site_id = '1703225'
+SOLAR_EDGE_CONFIG = CONFIG['solar_edge']
 
 
-api_url_meters = 'https://monitoringapi.solaredge.com/site/' + site_id + '/meters?&startTime=2021-05-24%2000:00:00&endTime=2021-05-24%2023:00:00&api_key=' + api_key
+
+api_key = SOLAR_EDGE_CONFIG['api_key']
+site_id = SOLAR_EDGE_CONFIG['site_id']
+
+
+
+api_url_meters = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/meters?&startTime=2021-05-24%2000:00:00&endTime=2021-05-24%2023:00:00&api_key=' + api_key
 meters_json_data = requests.get(api_url_meters).json()
 
-api_url_site_energy = 'https://monitoringapi.solaredge.com/site/' + site_id + '/energy?timeUnit=QUARTER_OF_AN_HOUR&endDate=2021-05-24&startDate=2021-05-24&api_key=' + api_key
+api_url_site_energy = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/energy?timeUnit=QUARTER_OF_AN_HOUR' \
+    + '&endDate=2021-05-24&startDate=2021-05-24&api_key=' \
+    + api_key
 site_energy_json_data = requests.get(api_url_site_energy).json()
 
-api_url_site_power = 'https://monitoringapi.solaredge.com/site/' + site_id + '/power?startTime=2021-05-24%2000:00:00&endTime=2021-05-25%2023:00:59&api_key=' + api_key
+api_url_site_power = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/power?startTime=2021-05-24%2000:00:00&endTime=2021-05-25%2023:00:59&api_key=' + api_key
 site_power_json_data = requests.get(api_url_site_power).json()
 
-api_url_site_overview = 'https://monitoringapi.solaredge.com/site/' + site_id + '/overview.json?api_key=' + api_key
+api_url_site_overview = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/overview.json?api_key=' + api_key
 site_overview_json_data = requests.get(api_url_site_overview).json()
 
-api_url_site_energy_details = 'https://monitoringapi.solaredge.com/site/' + site_id + '/energyDetails?meters=PRODUCTION,CONSUMPTION&timeUnit=DAY&startTime=2021-05-15%2011:00:00&endTime=2021-05-16%2013:00:0&api_key=' + api_key
+api_url_site_energy_details = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/energyDetails?meters=PRODUCTION,CONSUMPTION' \
+    + '&timeUnit=DAY&startTime=2021-05-15%2011:00:00' \
+    + '&endTime=2021-05-16%2013:00:0&api_key=' + api_key
 site_energy_detail_json_data = requests.get(api_url_site_energy_details).json()
 
-api_url_site_powerflow = 'https://monitoringapi.solaredge.com/site/' + site_id + '/currentPowerFlow.json?api_key=' + api_key
+api_url_site_powerflow = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/currentPowerFlow.json?api_key=' + api_key
 site_powerflow_json_data = requests.get(api_url_site_powerflow).json()
 
-api_url_storage = 'https://monitoringapi.solaredge.com/site/' + site_id + '/storageData?startTime=2021-05-23%2000:00:00&endTime=2021-05-24%2013:00:00&api_key=' + api_key
+api_url_storage = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/storageData?startTime=2021-05-23%2000:00:00' \
+    + '&endTime=2021-05-24%2013:00:00&api_key=' + api_key
 site_storage_json_data = requests.get(api_url_storage).json()
 
-api_url_env_benefits = ' https://monitoringapi.solaredge.com/site/' + site_id + '/envBenefits?systemUnits=Imperial&api_key=' +api_key
+api_url_env_benefits = 'https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/envBenefits?systemUnits=Imperial&api_key=' +api_key
 site_env_benefits_json_data = requests.get(api_url_env_benefits).json()
 
-api_url_inverter_details = 'https://monitoringapi.solaredge.com/equipment/' + site_id + '/7E1605B5-4E/data?startTime=2021-05-24%2011:55:00&endTime=2021-05-24%2012:00:00&api_key=' + api_key
+api_url_inverter_details = 'https://monitoringapi.solaredge.com/equipment/' \
+    + site_id + '/7E1605B5-4E/data?startTime=2021-05-24%2011:55:00' \
+    + '&endTime=2021-05-24%2012:00:00&api_key=' + api_key
 site_inverter_json_data = requests.get(api_url_inverter_details).json()
 
-api_url_sensors = ' https://monitoringapi.solaredge.com/site/' + site_id + '/sensors?startDate=2021-05-24%2011:00:00&endDate=2021-05-25%2013:00:00&api_key=' + api_key
+api_url_sensors = ' https://monitoringapi.solaredge.com/site/' + site_id \
+    + '/sensors?startDate=2021-05-24%2011:00:00&endDate=2021-05-25%2013:00:00&api_key=' + api_key
 site_sensor_json_data = requests.get(api_url_sensors).json()
-
-
-
 
 
 
@@ -91,13 +109,12 @@ class overview():
         lastdayenergy = site_overview_json_data['overview']['lastDayData']['energy'] / 1000
         currentpower = site_overview_json_data['overview']['currentPower']['power']
         return {'lastupdatetime': lastupdatetime, 'lifetimedata': lifetimedata,
-                'lastyearenergy': lastyearenergy, 'lastmonthenergy': lastmonthenergy, 'lastdayenergy': lastdayenergy,
-                'currentpower': currentpower}
+                'lastyearenergy': lastyearenergy, 'lastmonthenergy': lastmonthenergy,
+                'lastdayenergy': lastdayenergy, 'currentpower': currentpower}
 
 
 result4 = overview.site_overview()
 print(result4['lastyearenergy'])
-
 
 
 class siteenergydetails():
@@ -110,7 +127,6 @@ class siteenergydetails():
 
 result5 = siteenergydetails.energydetailsdata()
 #print(result5['energy_details_api'])
-
 
 
 
@@ -141,11 +157,11 @@ print(result7['storage_api'])
 
 
 class siteenvbenefits():
-     @staticmethod
-     def envdata():
-         envbenefits_api = site_env_benefits_json_data['envBenefits']
+    @staticmethod
+    def envdata():
+        envbenefits_api = site_env_benefits_json_data['envBenefits']
 
-         return {'envbenefits_api': envbenefits_api}
+        return {'envbenefits_api': envbenefits_api}
 
 
 result8 = siteenvbenefits.envdata()
@@ -173,5 +189,3 @@ class sitesensors():
 
 result10 = sitesensors.sensordata()
 print(result10['sensor_api'])
-
-

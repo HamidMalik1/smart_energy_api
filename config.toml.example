@@ -1,0 +1,13 @@
+[csv]
+ilmanet = "fmi_api_data.csv"
+solar_edge_power = "energy_power_production.csv"
+
+[db]
+host = "localhost"
+port = 3306
+user = "5gtn"
+passwd = "5gtn"
+
+[solar_edge]
+api_key = "I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V"
+site_id = "1703225"
