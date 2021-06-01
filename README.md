@@ -15,3 +15,42 @@ Including Energy, Power and other useful data for solar production at Uni of Oul
 # Data visualization
 The graphic representation of data is shown using Grafana 
 Energy_Weather.json and local snapshot : http://localhost:3000/dashboard/snapshot/mtubveNFfyPH9WFgu8G1d5KeF6UndWxk  
+
+
+
+# Running with pipenv
+You need Python 3.9 and `pip`. The project dependencies are managed with Pipenv.
+
+These commands are run in the repository root:
+
+```sh
+cd smart_energy_api
+```
+
+1. Install pipenv:
+
+```sh
+pip install --user pipenv
+```
+
+2. Install project dependencies:
+
+```sh
+pipenv install
+```
+
+3. Copy example config
+
+```
+cp config.toml.example config.toml
+```
+
+4. Run:
+
+```sh
+pipenv shell
+```
+
+```sh
+python src/main.py
+```
