@@ -2,13 +2,11 @@
 Created on 10.05.2021
 Provides the Finnish Meteorological Institute (FMI) API data of Uni of Oulu
 '''
-
-import urllib.request
 import csv
-import pandas as pd
 import MySQLdb
+import pandas as pd
 import schedule
-
+import urllib.request
 
 
 

@@ -2,17 +2,15 @@
 Created on 10.05.2021
 Provides the SolarEdge API data of Uni of Oulu
 '''
+import csv
+import time
+from datetime import datetime, timedelta
 
-
+import MySQLdb
+import pandas as pd
+import requests
 import solaredge
 import schedule
-import requests
-import MySQLdb
-from datetime import datetime, timedelta
-import csv
-import pandas as pd
-import time
-
 
 
 
