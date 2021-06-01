@@ -37,9 +37,6 @@ def job():
 
 
 
-
-
-
 #This is for splitting date_time and eliminating timezone +03
 
     file_name = ILMANET_OUTPUT
