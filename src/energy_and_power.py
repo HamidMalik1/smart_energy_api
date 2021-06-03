@@ -25,9 +25,7 @@ site_id = SOLAR_EDGE_CONFIG['site_id']
 
 
 
-def job1():
-
-
+def overview():
     api_url_site_overview = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id + \
         '/overview.json?api_key=' + api_key
     site_overview_json_data = requests.get(api_url_site_overview).json()
@@ -62,10 +60,9 @@ def job1():
 
 
 
-#Energy and Power Production details
+# Energy and Power Production details
 
-def job2():
-
+def energy_and_power():
     api_data = solaredge.Solaredge(api_key)
 
     today = datetime.today().strftime('%Y-%m-%d')
@@ -135,8 +132,8 @@ def job2():
         print('number of rows deleted', cur.rowcount)
 
 if __name__ == "__main__":
-    schedule.every(5).minutes.do(job1)
-    schedule.every(15).minutes.do(job2)
+    schedule.every(5).minutes.do(overview)
+    schedule.every(15).minutes.do(energy_and_power)
 
     while True:
         schedule.run_pending()
