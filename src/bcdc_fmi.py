@@ -84,8 +84,8 @@ def job():
     conn.commit()
     print('done')
 
+if __name__ == "__main__":
+    schedule.every(180).minutes.do(job)
 
-schedule.every(180).minutes.do(job)
-
-while True:
-    schedule.run_pending()
+    while True:
+        schedule.run_pending()

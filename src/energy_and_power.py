@@ -134,9 +134,9 @@ def job2():
         conn.commit()
         print('number of rows deleted', cur.rowcount)
 
+if __name__ == "__main__":
+    schedule.every(5).minutes.do(job1)
+    schedule.every(15).minutes.do(job2)
 
-schedule.every(5).minutes.do(job1)
-schedule.every(15).minutes.do(job2)
-
-while True:
-    schedule.run_pending()
+    while True:
+        schedule.run_pending()
