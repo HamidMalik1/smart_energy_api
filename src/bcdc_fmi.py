@@ -85,7 +85,7 @@ def insert_from_csv(conn, csv_file):
     with open(csv_file) as fmi_csv_file:
         rows = csv.DictReader(fmi_csv_file, delimiter=',')
         for row in rows:
-            insert_line(conn, rows)
+            insert_line(conn, row)
     conn.commit()
 
 
