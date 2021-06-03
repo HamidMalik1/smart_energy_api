@@ -76,6 +76,7 @@ def merge_dfs(*dfs):
     print(*dfs)
     return pd.merge(*dfs)
 
+
 def write_merged(csv_file, merged):
     """Write merged dfs to a .csv"""
     merged.to_csv(csv_file, index=False)
