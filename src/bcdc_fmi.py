@@ -23,7 +23,7 @@ def job():
     conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
 
 
-    api_url_fmi = 'http://ilmanet.fi/download.php?orderId=93173&id=127&type=solar&limit=1'
+    api_url_fmi = str(CONFIG['ilmanet']['url']) + '/download.php?orderId=93173&id=127&type=solar&limit=1'
     fmi_csv_data = urllib.request.urlopen(api_url_fmi)
     lines = [l.decode('utf-8') for l in fmi_csv_data.readlines()]
     fmi_csv = csv.reader(lines)

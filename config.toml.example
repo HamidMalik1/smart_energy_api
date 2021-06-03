@@ -8,6 +8,10 @@ port = 3306
 user = "5gtn"
 passwd = "5gtn"
 
+[ilmanet]
+url = "http://ilmanet.fi"
+
 [solar_edge]
+url = "https://monitoringapi.solaredge.com"
 api_key = "I8AZZW5B2XGFNM3WSJ8IDA0441Z9TQ9V"
 site_id = "1703225"

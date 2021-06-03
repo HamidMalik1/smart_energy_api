@@ -28,7 +28,7 @@ site_id = SOLAR_EDGE_CONFIG['site_id']
 def job1():
 
 
-    api_url_site_overview = 'https://monitoringapi.solaredge.com/site/' + site_id + \
+    api_url_site_overview = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id + \
         '/overview.json?api_key=' + api_key
     site_overview_json_data = requests.get(api_url_site_overview).json()
 

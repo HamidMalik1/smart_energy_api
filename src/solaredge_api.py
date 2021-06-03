@@ -15,49 +15,49 @@ site_id = SOLAR_EDGE_CONFIG['site_id']
 
 
 
-api_url_meters = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_meters = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/meters?&startTime=2021-05-24%2000:00:00&endTime=2021-05-24%2023:00:00&api_key=' + api_key
 meters_json_data = requests.get(api_url_meters).json()
 
-api_url_site_energy = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_site_energy = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/energy?timeUnit=QUARTER_OF_AN_HOUR' \
     + '&endDate=2021-05-24&startDate=2021-05-24&api_key=' \
     + api_key
 site_energy_json_data = requests.get(api_url_site_energy).json()
 
-api_url_site_power = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_site_power = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/power?startTime=2021-05-24%2000:00:00&endTime=2021-05-25%2023:00:59&api_key=' + api_key
 site_power_json_data = requests.get(api_url_site_power).json()
 
-api_url_site_overview = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_site_overview = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/overview.json?api_key=' + api_key
 site_overview_json_data = requests.get(api_url_site_overview).json()
 
-api_url_site_energy_details = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_site_energy_details = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/energyDetails?meters=PRODUCTION,CONSUMPTION' \
     + '&timeUnit=DAY&startTime=2021-05-15%2011:00:00' \
     + '&endTime=2021-05-16%2013:00:0&api_key=' + api_key
 site_energy_detail_json_data = requests.get(api_url_site_energy_details).json()
 
-api_url_site_powerflow = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_site_powerflow = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/currentPowerFlow.json?api_key=' + api_key
 site_powerflow_json_data = requests.get(api_url_site_powerflow).json()
 
-api_url_storage = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_storage = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/storageData?startTime=2021-05-23%2000:00:00' \
     + '&endTime=2021-05-24%2013:00:00&api_key=' + api_key
 site_storage_json_data = requests.get(api_url_storage).json()
 
-api_url_env_benefits = 'https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_env_benefits = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/envBenefits?systemUnits=Imperial&api_key=' +api_key
 site_env_benefits_json_data = requests.get(api_url_env_benefits).json()
 
-api_url_inverter_details = 'https://monitoringapi.solaredge.com/equipment/' \
+api_url_inverter_details = str(SOLAR_EDGE_CONFIG['url']) + '/equipment/' \
     + site_id + '/7E1605B5-4E/data?startTime=2021-05-24%2011:55:00' \
     + '&endTime=2021-05-24%2012:00:00&api_key=' + api_key
 site_inverter_json_data = requests.get(api_url_inverter_details).json()
 
-api_url_sensors = ' https://monitoringapi.solaredge.com/site/' + site_id \
+api_url_sensors = str(SOLAR_EDGE_CONFIG['url']) + '/site/' + site_id \
     + '/sensors?startDate=2021-05-24%2011:00:00&endDate=2021-05-25%2013:00:00&api_key=' + api_key
 site_sensor_json_data = requests.get(api_url_sensors).json()
 
