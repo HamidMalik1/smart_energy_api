@@ -65,5 +65,5 @@ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest
 After preparing the pipenv environment please run:
 
 ```sh
-pylint src/
+pylint smart_energy_api/
 ```

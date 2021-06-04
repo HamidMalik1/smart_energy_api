@@ -11,8 +11,8 @@ import pandas as pd
 import solaredge
 import schedule
 
-from config import CONFIG, MYSQL_CONNECTION
-import solaredge_api
+from .config import CONFIG, MYSQL_CONNECTION
+from . import solaredge_api
 
 
 
@@ -20,7 +20,7 @@ POWER_OUTPUT = CONFIG['csv']['solar_edge_power']
 
 SOLAR_EDGE_CONFIG = CONFIG['solar_edge']
 
-SITE_ID = SOLAR_EDGE_CONFIG['SITE_ID']
+SITE_ID = SOLAR_EDGE_CONFIG['site_id']
 
 
 
@@ -128,12 +128,3 @@ def energy_and_power():
     
     insert_from_csv(conn, POWER_OUTPUT)
     cleanup_repeating(conn)
-
-
-
-if __name__ == "__main__":
-    schedule.every(5).minutes.do(overview)
-    schedule.every(15).minutes.do(energy_and_power)
-
-    while True:
-        schedule.run_pending()

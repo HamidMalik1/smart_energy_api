@@ -9,7 +9,7 @@ import MySQLdb
 import pandas as pd
 import schedule
 
-from config import CONFIG, MYSQL_CONNECTION
+from .config import CONFIG, MYSQL_CONNECTION
 
 
 
@@ -112,11 +112,3 @@ def job():
     insert_from_csv(conn, ILMANET_OUTPUT)
     cleanup_repeating(conn)
     print('done')
-
-
-
-if __name__ == "__main__":
-    schedule.every(180).minutes.do(job)
-
-    while True:
-        schedule.run_pending()
