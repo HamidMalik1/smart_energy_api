@@ -9,7 +9,7 @@ user = "5gtn"
 passwd = "5gtn"
 
 [ilmanet]
-url = "http://ilmanet.fi"
+url = "https://ilmanet.fi"
 
 [solar_edge]
 url = "https://monitoringapi.solaredge.com"
