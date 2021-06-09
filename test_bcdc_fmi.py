@@ -2,7 +2,7 @@ import unittest
 
 TEST_CONFIG = {
 	'ilmanet': {
-		'url': 'http://ilmanet.fi'
+		'url': 'https://ilmanet.fi'
 	}
 }
 
