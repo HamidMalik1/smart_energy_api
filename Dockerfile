@@ -9,7 +9,7 @@ COPY Pipfile* /var/smart_energy_api
 
 
 # you can mount config with:
-# --volume settings.conf:/var/smart_energy_api/settings.conf:ro
+# --volume config.toml:/var/smart_energy_api/config.toml:ro
 
 RUN pip install --no-cache-dir pipenv
 RUN pipenv install --system
