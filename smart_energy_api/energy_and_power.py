@@ -26,8 +26,8 @@ SITE_ID = SOLAR_EDGE_CONFIG['site_id']
 
 def insert_overview(conn, overview_result):
     """Insert a overview line to DB"""
-    query = "INSERT INTO solaredge_overview_api(lastupdatetime, lifetimedata, " \
-        "lastyearenergy, lastmonthenergy,lastdayenergy, currentpower )  VALUES (%s,%s,%s,%s,%s,%s)"
+    query = 'INSERT INTO solaredge_overview_api(lastupdatetime, lifetimedata, ' \
+        'lastyearenergy, lastmonthenergy,lastdayenergy, currentpower )  VALUES (%s,%s,%s,%s,%s,%s)'
     cur = conn.cursor()
     cur.executemany(query, [(overview_result['lastupdatetime'], overview_result['lifetimedata'],
         overview_result['lastyearenergy'], overview_result['lastmonthenergy'],
@@ -40,7 +40,7 @@ def overview():
     """Fetch and commit to DB"""
     overview_result = solaredge_api.overview.site_overview()
 
-    conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
+    conn = MySQLdb.connect(**MYSQL_CONNECTION, db='smartmetering')
     insert_overview(conn, overview_result)
 
 
@@ -84,8 +84,8 @@ def write_merged(csv_file, merged):
 
 def insert_power(conn, row):
     """Insert a power row to DB"""
-    query = "INSERT INTO energy_power_production(date ,energy ,power) " \
-        "VALUES (%s,%s,%s)"
+    query = 'INSERT INTO energy_power_production(date ,energy ,power) ' \
+        'VALUES (%s,%s,%s)'
     cur = conn.cursor()
     cur.executemany(query, [(row['date'], row['energy'], row['power'])])
 
@@ -105,9 +105,9 @@ def insert_from_csv(conn, csv_file):
 def cleanup_repeating(conn):
     """Cleanup previously written duplicate entries from DB"""
     # Add auto_increment in energy_production table to avoid repeating values.
-    sql_delete_query = "DELETE n1 FROM energy_power_production n1," \
-        " energy_power_production n2 " \
-        "WHERE n1.ID < n2.ID AND n1.date = n2.date "
+    sql_delete_query = 'DELETE n1 FROM energy_power_production n1,' \
+        ' energy_power_production n2 ' \
+        'WHERE n1.ID < n2.ID AND n1.date = n2.date '
     cur = conn.cursor()
     cur.execute(sql_delete_query)
     conn.commit()
@@ -125,7 +125,7 @@ def energy_and_power():
 
     write_merged(POWER_OUTPUT, merge_dfs(energy_df, power_df))
 
-    conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
+    conn = MySQLdb.connect(**MYSQL_CONNECTION, db='smartmetering')
     
     insert_from_csv(conn, POWER_OUTPUT)
     cleanup_repeating(conn)

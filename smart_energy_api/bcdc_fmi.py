@@ -50,18 +50,18 @@ def parse_date_and_overwrite(csv_file):
 
 def insert_line(conn, line):
     """Insert a forecast line to DB"""
-    sql_statement = "INSERT INTO fmi_data(forecast_time ,request_id ,power_output_w, " \
-        "power_output_f0_w, power_output_f10_w, power_output_f25_w," \
-        "power_output_f50_w, power_output_f75_w, power_output_f90_w, " \
-        "power_output_f100_w, system_temperature_c,nominal_output_efficiency, " \
-        "air_temperature_c, cloud_cover_total, " \
-        "cloud_cover_high, cloud_cover_medium, " \
-        "cloud_cover_low, system_radiation_global_wm2, " \
-        " system_radiation_direct_wm2," \
-        "system_radiation_diffuse_wm2, radiation_global_wm2, "\
-        " radiation_direct_wm2, radiation_diffuse_wm2 ) " \
-        "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s," \
-        "%s,%s)"
+    sql_statement = 'INSERT INTO fmi_data(forecast_time ,request_id ,power_output_w, ' \
+        'power_output_f0_w, power_output_f10_w, power_output_f25_w,' \
+        'power_output_f50_w, power_output_f75_w, power_output_f90_w, ' \
+        'power_output_f100_w, system_temperature_c,nominal_output_efficiency, ' \
+        'air_temperature_c, cloud_cover_total, ' \
+        'cloud_cover_high, cloud_cover_medium, ' \
+        'cloud_cover_low, system_radiation_global_wm2,' \
+        ' system_radiation_direct_wm2,' \
+        'system_radiation_diffuse_wm2, radiation_global_wm2, '\
+        ' radiation_direct_wm2, radiation_diffuse_wm2 ) ' \
+        'VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,' \
+        '%s,%s)'
 
     cur = conn.cursor()
     cur.executemany(sql_statement, [(line['forecast_time'],
@@ -94,8 +94,8 @@ def cleanup_repeating(conn):
     # The Energy Weather data api send repeating forecast data entries, delete sql statement
     # required.
     cur = conn.cursor()
-    query = "DELETE n1 FROM fmi_data n1, fmi_data n2 " \
-        "WHERE n1.request_id < n2.request_id AND n1.forecast_time = n2.forecast_time"
+    query = 'DELETE n1 FROM fmi_data n1, fmi_data n2 ' \
+        'WHERE n1.request_id < n2.request_id AND n1.forecast_time = n2.forecast_time'
     cur.execute(query)
     conn.commit()
 
@@ -107,7 +107,7 @@ def job():
     write_csv(ILMANET_OUTPUT, fmi_csv)
     parse_date_and_overwrite(ILMANET_OUTPUT)
 
-    conn = MySQLdb.connect(**MYSQL_CONNECTION, db="smartmetering")
+    conn = MySQLdb.connect(**MYSQL_CONNECTION, db='smartmetering')
 
     insert_from_csv(conn, ILMANET_OUTPUT)
     cleanup_repeating(conn)
