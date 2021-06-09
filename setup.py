@@ -9,12 +9,12 @@ setup(
     ),
     author='Hamid Malik',
     license='APL 2.0',
-    package_dir={'': 'src'},
-    packages=find_packages(where='src'),
+    package_dir={'': 'smart_energy_api'},
+    packages=find_packages(where='smart_energy_api'),
     install_requires=[
         'requests',
         'schedule',
-        'PyMySQL',
+        'mysqlclient',
         'solaredge'
     ],
     zip_safe=False
