@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.9-buster
 
 WORKDIR /var/smart_energy_api
 
@@ -11,7 +11,11 @@ COPY Pipfile* /var/smart_energy_api
 # you can mount config with:
 # --volume config.toml:/var/smart_energy_api/config.toml:ro
 
-RUN pip install --no-cache-dir pipenv
-RUN pipenv install --system
+RUN apt-get update \
+  && apt-get install -y python3-dev \
+     default-libmysqlclient-dev build-essential
 
-CMD ["python", "/usr/src/smart_energy_api/main.py"]
+RUN pip install --no-cache-dir pipenv
+RUN pipenv install --site-packages
+
+CMD ["pipenv", "run", "python", "/usr/src/smart_energy_api/main.py"]
