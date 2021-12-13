@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 schedule = "*"
-solaredge = "*"
+solaredge = "0.0.4"
 toml = "*"
 pylint = "*"
 mysqlclient = "*"
@@ -15,4 +15,3 @@ pandas = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.9"

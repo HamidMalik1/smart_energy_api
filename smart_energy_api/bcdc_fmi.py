@@ -3,17 +3,17 @@ Created on 10.05.2021
 Provides the Finnish Meteorological Institute (FMI) API data of Uni of Oulu
 '''
 import csv
-import urllib.request
+import datetime as dt
 
+import urllib.request
 import MySQLdb
-import pandas as pd
-import schedule
 
 from .config import CONFIG, MYSQL_CONNECTION
 
 
 
-ILMANET_OUTPUT = CONFIG['csv']['ilmanet']
+# FIXME
+ASSUME_DB_TIMEZONE = dt.timezone(-dt.timedelta(hours=2), "Europe/Helsinki")
 
 
 
@@ -28,43 +28,43 @@ def fetch(base_url):
 
 def lines(fetched):
     """Iterable list of lines from Ilmanet"""
-    fmi_csv_data = fetched
-    return [line.decode('utf-8').rstrip() for line in fmi_csv_data.readlines()]
+    return [line.decode('utf-8').rstrip() for line in fetched.readlines()]
 
 
-def write_csv(csv_file, content):
-    """Write a two dimensional list as a .csv"""
-    with open(csv_file, 'w') as f:
-        writer = csv.writer(f)
-        writer.writerows(content)
+def read_forecasts(lines):
+    """Return a list of forecast dicts"""
+    reader = csv.DictReader(lines)
+    return list(reader)
 
 
-def parse_date_and_overwrite(csv_file):
-    """Work-around for splitting date_time and eliminating timezone +03"""
-    # read file
-    df = pd.read_csv(csv_file, index_col='forecast_time', parse_dates=['forecast_time'],
-                    date_parser=lambda x: pd.to_datetime(x.rsplit('+', 1)[0]))
-    # overwrite file
-    df.to_csv(csv_file, sep=',')
+def overwrite_ilmanet_date(forecast):
+    """Overwrite forecast forecast_time with with a datetime instance"""
+    date = dt.datetime.strptime(forecast['forecast_time'] + "00", '%Y-%m-%d %H:%M:%S%z')
+    forecast['forecast_time'] = date
 
 
-def insert_line(conn, line):
-    """Insert a forecast line to DB"""
-    sql_statement = 'INSERT INTO fmi_data(forecast_time ,request_id ,power_output_w, ' \
-        'power_output_f0_w, power_output_f10_w, power_output_f25_w,' \
+def parse_dates(forecasts):
+    """Overwrite forecasts forecast_time with with a datetime instance"""
+    [overwrite_ilmanet_date(forecast) for forecast in forecasts]
+
+
+def replace_one(conn, line):
+    """Replace a forecast line to DB, the unique key is forecast_time"""
+    query = 'REPLACE INTO fmi_data(forecast_time, request_id, power_output_w, ' \
+        'power_output_f0_w, power_output_f10_w, power_output_f25_w, ' \
         'power_output_f50_w, power_output_f75_w, power_output_f90_w, ' \
-        'power_output_f100_w, system_temperature_c,nominal_output_efficiency, ' \
+        'power_output_f100_w, system_temperature_c, nominal_output_efficiency, ' \
         'air_temperature_c, cloud_cover_total, ' \
         'cloud_cover_high, cloud_cover_medium, ' \
-        'cloud_cover_low, system_radiation_global_wm2,' \
-        ' system_radiation_direct_wm2,' \
+        'cloud_cover_low, system_radiation_global_wm2, ' \
+        'system_radiation_direct_wm2, ' \
         'system_radiation_diffuse_wm2, radiation_global_wm2, '\
-        ' radiation_direct_wm2, radiation_diffuse_wm2 ) ' \
+        'radiation_direct_wm2, radiation_diffuse_wm2 ) ' \
         'VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,' \
         '%s,%s)'
 
     cur = conn.cursor()
-    cur.executemany(sql_statement, [(line['forecast_time'],
+    params = [
         line['request_id'], line['power_output_w'],
         line['power_output_f0_w'], line['power_output_f10_w'],
         line['power_output_f25_w'], line['power_output_f50_w'],
@@ -76,39 +76,27 @@ def insert_line(conn, line):
         line['cloud_cover_low'], line['system_radiation_global_wm2'],
         line['system_radiation_direct_wm2'], line['system_radiation_diffuse_wm2'],
         line['radiation_global_wm2'], line['radiation_direct_wm2'],
-        line['radiation_diffuse_wm2'])])
-    conn.escape_string(sql_statement)
+        line['radiation_diffuse_wm2']
+    ]
+    params = [conn.escape_string(str(param)) for param in params]
+    params = [line['forecast_time']] + params
+    cur.executemany(query, [tuple(params)])
+    if cur.rowcount < 1:
+        raise RuntimeError("Nothing was inserted or replaced")
 
 
-def insert_from_csv(conn, csv_file):
-    """Insert rows from a .csv"""
-    with open(csv_file) as f:
-        rows = csv.DictReader(f, delimiter=',')
-        for row in rows:
-            insert_line(conn, row)
-    conn.commit()
-
-
-def cleanup_repeating(conn):
-    """Cleanup previously written duplicate entries from DB"""
-    # The Energy Weather data api send repeating forecast data entries, delete sql statement
-    # required.
-    cur = conn.cursor()
-    query = 'DELETE n1 FROM fmi_data n1, fmi_data n2 ' \
-        'WHERE n1.request_id < n2.request_id AND n1.forecast_time = n2.forecast_time'
-    cur.execute(query)
+def replace(conn, forecasts):
+    """Replace a list of forecast dicts"""
+    for forecast in forecasts:
+        replace_one(conn, forecast)
     conn.commit()
 
 
 def job():
     """Fetch latest forecast and commit it to DB"""
     base_url = str(CONFIG['ilmanet']['url'])
-    fmi_csv = csv.reader(lines(fetch(base_url)))
-    write_csv(ILMANET_OUTPUT, fmi_csv)
-    parse_date_and_overwrite(ILMANET_OUTPUT)
-
+    forecasts = read_forecasts(lines(fetch(base_url)))
+    parse_dates(forecasts)
     conn = MySQLdb.connect(**MYSQL_CONNECTION, db='smartmetering')
-
-    insert_from_csv(conn, ILMANET_OUTPUT)
-    cleanup_repeating(conn)
+    replace(conn, forecasts)
     print('done')

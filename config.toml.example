@@ -1,9 +1,5 @@
-[csv]
-ilmanet = "fmi_api_data.csv"
-solar_edge_power = "energy_power_production.csv"
-
 [db]
-host = "localhost"
+host = "::1"
 port = 3306
 user = "5gtn"
 passwd = "5gtn"
